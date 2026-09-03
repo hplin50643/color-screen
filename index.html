@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant" style="background:#000;color-scheme:dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="深色介面的全螢幕調色盤。精準選色、純色顯示，支援離線使用與安裝到裝置。">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>全螢幕調色盤 · Color Screen</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main id="colorStage" class="color-stage" tabindex="-1" aria-hidden="true"></main>
+  <div id="editor" class="editor">
+    <header class="brand">
+      <svg class="brand-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="7" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="12" height="12" rx="3" fill="currentColor"/></svg>
+      <div><h1>全螢幕調色盤</h1><span class="brand-caption">COLOR SCREEN</span></div>
+    </header>
+    <div class="color-readout" aria-hidden="true">
+      <span class="readout-label">目前顯示 <span class="readout-line"></span> sRGB</span>
+      <span id="largeHex" class="large-hex">#000000</span>
+      <span id="largeRgb" class="large-rgb">RGB 0 / 0 / 0</span>
+    </div>
+    <section class="control-panel" aria-labelledby="panelTitle">
+      <header class="panel-header"><h2 id="panelTitle">調色盤</h2><span class="badge">sRGB</span></header>
+      <div class="panel-body">
+        <div id="svPicker" class="sv-picker" aria-hidden="true"><span id="svThumb" class="sv-thumb"></span></div>
+        <div class="range-block hue-block"><label for="hue">色相 <output id="hueValue" for="hue">0°</output></label><input id="hue" class="hue-range" type="range" min="0" max="360" step="1" value="0"></div>
+        <div class="sv-ranges">
+          <div class="range-block"><label for="saturation">飽和度 <output id="saturationValue" for="saturation">0%</output></label><input id="saturation" type="range" min="0" max="100" step="1" value="0"></div>
+          <div class="range-block"><label for="brightness">明度 <output id="brightnessValue" for="brightness">0%</output></label><input id="brightness" type="range" min="0" max="100" step="1" value="0"></div>
+        </div>
+        <div class="divider"></div>
+        <div class="hex-field"><label for="hexInput">HEX 色碼</label><div class="hex-input-wrap"><span id="currentSwatch" class="current-swatch" aria-hidden="true"></span><input id="hexInput" type="text" value="#000000" maxlength="7" spellcheck="false" autocomplete="off" autocapitalize="characters" aria-describedby="hexError" aria-invalid="false"></div><p id="hexError" class="field-error" aria-live="polite" hidden>請輸入三位或六位 HEX 色碼，例如 #ABC 或 #12ABEF。</p></div>
+        <fieldset class="rgb-fields"><legend>RGB <span>0–255</span></legend>
+          <div class="rgb-row"><label for="redNumber" class="channel-label red">R</label><input id="red" type="range" min="0" max="255" value="0" aria-label="紅色 R" data-channel="r"><input id="redNumber" class="number-input" type="text" inputmode="numeric" maxlength="3" value="0" aria-label="紅色 R 數值" aria-describedby="rgbError" data-number="r" autocomplete="off"></div>
+          <div class="rgb-row"><label for="greenNumber" class="channel-label green">G</label><input id="green" type="range" min="0" max="255" value="0" aria-label="綠色 G" data-channel="g"><input id="greenNumber" class="number-input" type="text" inputmode="numeric" maxlength="3" value="0" aria-label="綠色 G 數值" aria-describedby="rgbError" data-number="g" autocomplete="off"></div>
+          <div class="rgb-row"><label for="blueNumber" class="channel-label blue">B</label><input id="blue" type="range" min="0" max="255" value="0" aria-label="藍色 B" data-channel="b"><input id="blueNumber" class="number-input" type="text" inputmode="numeric" maxlength="3" value="0" aria-label="藍色 B 數值" aria-describedby="rgbError" data-number="b" autocomplete="off"></div>
+          <p id="rgbError" class="field-error" aria-live="polite" hidden>RGB 請輸入 0 到 255 的整數。</p>
+        </fieldset>
+        <div class="presets-section"><h3>常用色票</h3><div id="presets" class="presets">
+          <button type="button" class="preset" data-hex="#000000" style="--swatch:#000" aria-label="黑色 #000000" aria-pressed="true" title="黑色 #000000"></button>
+          <button type="button" class="preset" data-hex="#FFFFFF" style="--swatch:#fff" aria-label="白色 #FFFFFF" aria-pressed="false" title="白色 #FFFFFF"></button>
+          <button type="button" class="preset" data-hex="#FF0000" style="--swatch:#f00" aria-label="紅色 #FF0000" aria-pressed="false" title="紅色 #FF0000"></button>
+          <button type="button" class="preset" data-hex="#00FF00" style="--swatch:#0f0" aria-label="綠色 #00FF00" aria-pressed="false" title="綠色 #00FF00"></button>
+          <button type="button" class="preset" data-hex="#0000FF" style="--swatch:#00f" aria-label="藍色 #0000FF" aria-pressed="false" title="藍色 #0000FF"></button>
+          <button type="button" class="preset" data-hex="#FFFF00" style="--swatch:#ff0" aria-label="黃色 #FFFF00" aria-pressed="false" title="黃色 #FFFF00"></button>
+          <button type="button" class="preset" data-hex="#00FFFF" style="--swatch:#0ff" aria-label="青色 #00FFFF" aria-pressed="false" title="青色 #00FFFF"></button>
+          <button type="button" class="preset" data-hex="#FF00FF" style="--swatch:#f0f" aria-label="洋紅色 #FF00FF" aria-pressed="false" title="洋紅色 #FF00FF"></button>
+        </div></div>
+      </div>
+      <footer class="panel-footer">
+        <button id="displayButton" class="display-button" type="button" aria-describedby="displayHelp"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>全螢幕顯色</button>
+        <p id="displayHelp" class="display-help">隱藏所有控制項，點一下畫面或按 Esc 返回。</p>
+        <div class="app-meta"><span id="offlineStatus" class="offline-status" role="status">正在準備離線使用</span><button id="installButton" class="text-button" type="button">安裝應用程式 <span aria-hidden="true">↗</span></button></div>
+      </footer>
+    </section>
+  </div>
+  <dialog id="installDialog" class="install-dialog" aria-labelledby="installTitle"><form method="dialog"><h2 id="installTitle">安裝到你的裝置</h2><p>安裝後可從主畫面開啟。首次成功快取後，沒有網路也能調色。</p><ul><li><strong>iPhone／iPad：</strong>在瀏覽器的分享選單中選擇「加入主畫面」。</li><li><strong>Android／電腦：</strong>在瀏覽器選單中選擇「安裝應用程式」或「新增至主畫面」；Mac Safari 可使用「加入 Dock」。</li></ul><p class="muted">安裝方式依瀏覽器而異。若沒有安裝選項，仍可直接使用網頁。原生全螢幕也取決於瀏覽器支援；系統狀態列可能保留。</p><button class="display-button" value="close">知道了</button></form></dialog>
+  <noscript><div class="noscript">請啟用 JavaScript，才能使用調色與全螢幕功能。</div></noscript>
+</body>
+</html>
