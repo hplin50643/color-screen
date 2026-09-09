@@ -4,6 +4,12 @@
 
 原生 HTML、CSS、JavaScript，沒有框架、後端、CDN、追蹤器或執行期套件。此資料夾是獨立專案，不會連線或修改 AS7341／ESP32 程式。
 
+<p align="center">
+  <img src="docs/screenshots/mobile.jpg" alt="手機瀏覽全螢幕調色盤的預設黑色畫面" width="390">
+</p>
+
+<p align="center"><sub>手機版 390 × 844：預設黑色顯色區與固定深色調色介面</sub></p>
+
 ## 使用方式
 
 - 每次重新開啟或重新整理都從黑色 `#000000` 開始，不記錄上次顏色。
